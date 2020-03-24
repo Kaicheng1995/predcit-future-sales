@@ -76,7 +76,7 @@ Before doing this part, converted daily sales to monthly sales, and merge all da
 ![](https://github.com/Kaicheng1995/predict-future-sales/blob/master/img/all.png)
 
 ### ***Lag features + Mean Encoding***
-Since it's a time series quetsion, I include lag features to help prediction. When doing label encoding, it has some shortcomings. Since we have tem-million observations, the value of observations that have been encoded could have passive influences on the prediction result because they have real number meanings. To deal with the wide-scattered observations, we can process them with mean encoding.
+Since it's a time series quetsion, I include lag features to help prediction. When doing label encoding, it has some shortcomings. Since I have tem-million observations, the value of observations that have been encoded could have passive influences on the prediction result because they have real number meanings. To deal with the wide-scattered observations, I can process them with mean encoding.
 
 Actually every feature has real meanings instead of just raw data processing.
 ```
@@ -123,8 +123,167 @@ In the end, we can successfully increment 35 new features through all the work d
 
 
 
+
+
 ## Methodology
 
+### ***Algorithms***
+I have employed three different algorithms:
+**`Random Forest`**, **`lightGBM`**, **`XGBoost`**
+
+
+
+### ***Result Evaluation***
+In this part, I choose Root Mean Square Error(RMSE) as evaluation metric for testing dataset.
+To compare among three different algorithms, I build and train all three models with default parameters. And the results are shown below:
+![](https://github.com/Kaicheng1995/predict-future-sales/blob/master/img/result.png)
+Among these three models, Random Forest plays worst with underfitting problem. LightGBM and XGBoost both work very well without overfitting or underfitting problems. However, LightGBM need less time and iterations for training model than XGBoost.
+
+
+### ***Parameter Tuning***
+XGBoost algorithm has become the ultimate weapon of many data scientists. It’s a highly sophisticated algorithm, powerful enough to deal with all sorts of irregularities of data.
+
+Building a model using XGBoost is easy. However, improving the model using XGBoost is difficult. This algorithm uses multiple parameters. To improve the model, parameter tuning is must. Hence, in this part I’ll present the steps of parameter tuning along with some useful information about XGBoost's parameters.
+
+* Step 1. Fix number of estimators  
+In order to decide on boosting parameters, I need to set some initial values of other parameters. Therefore, I take the following values:  
+**`learning_rate = 0.1 `** : Generally a learning rate of 0.1 works but somewhere between 0.05 to 0.3 should work for different problems.   
+**`max_depth = 5  `** : This should be between 3-10. I’ve started with 5 but a different number can be chosen as well. 4-6 can be good starting points.  
+**`min_child_weight = 1 `** : We choose the default value for this parameter.
+**`gamma = 0 `** : I choose the default value for this parameter.
+**`subsample, colsample_bytree = 0.8 `** :This is a commonly used as start value. Typical values range between 0.5-0.9.  
+
+
+All the above settings are just initial estimates and will be tuned later. Then I check the optimum number of estimators using both cv function[1]and early-stopping method of XGBoost.
+First, I use early-stopping method to find out the number of estimators until the model hasn't improved in 100 rounds.  
+
+
+```python
+params = {'learning_rate': 0.1, 'max_depth': 5, 
+          'min_child_weight': 1, 'subsample': 0.8, 'colsample_bytree': 0.8,
+          'gamma': 0, 'reg_alpha': 0, 'reg_lambda': 1, 'eval_metric':'rmse'}
+watchlist = [(d_train, 'train'), (d_valid, 'valid')]
+rgs = xgb.train(params, d_train, 10000, watchlist, early_stopping_rounds=100,
+verbose_eval=10)
+```  
+
+  
+  
+Result:
+Stopping. Best iteration:[74]  
+
+Then I use GridSearchCV to find out the optimum number of estimators around 74.  
+```python
+cv_params = {'n_estimators': [70,71,72,73,74]}
+other_params={'objective':'reg:squarederror','learning_rate':0.1,
+'n_estimators':500,'max_depth':5,'min_child_weight':1,
+'subsample':0.8, 'colsample_bytree': 0.8,
+                'gamma': 0,'reg_alpha': 0, 'reg_lambda': 1}
+model = xgb.XGBRegressor(**other_params)
+optimized_xgb=GridSearchCV(estimator=model,param_grid=cv_params, 					verbose=1,n_jobs=-1)
+optimized_xgb.fit(x_train, y_train)
+evalute_result = optimized_GBM.cv_results_
+print('best value for the parameter：{0}'.format(optimized_xgb.best_params_))
+```  
+
+Result:
+best value for the parameter：{'n_estimators': 72}  
+Hence, I will set 72 as the value of n_estimators for tuning tree-based parameters in the following steps.
+
+
+* Step 2. Tune max_depth and min_child_weight  
+I tune these first as they will have the highest impact on model outcome. To start with, I set wide ranges: from 3 to 10 for max_depth and 1 to 6 for min_child_weight.
+```python
+cv_params = {'max_depth':range(3,11), 'min_child_weight':range(1,7)}
+Result:
+best value for the parameter：{'max_depth': 5, 'min_child_weight': 2}
+```
+
+Here, I have run 48 combinations with wide intervals between values. The ideal values are 5 for max_depth and 2 for min_child_weight.
+
+
+* Step 3.Tune gamma  
+Then I tune gamma value using the parameters already tuned above. Gamma can take various values but I only check for 5 values here.
+
+```python
+cv_params = {'gamma':[i/10.0 for i in range(0,5)]}
+```
+Result:
+best value for the parameter：{'gamma': 0.0}  
+This shows that our original value of gamma, i.e. 0 is the optimum one. 
+
+* Step 4.Tune subsample and colsamle_bytree  
+The next step would be try different subsample and colsample_bytree values. Lets do this in 2 stages as well and take values 0.6,0.7,0.8,0.9 for both to start with.
+
+```python
+cv_params = {'subsample':[i/10.0 for i in range(6,10)],
+             'colsample_bytree':[i/10.0 for i in range(6,10)]}
+```  
+Here, I find 0.8 as the optimum value for both subsample and colsample_bytree. Then I'll try values in 0.05 interval around these.
+
+```python
+cv_params = {'subsample':[i/100.0 for i in range(75,90,5)],
+             'colsample_bytree':[i/100.0 for i in range(75,90,5)]}
+```
+Result:
+best value for the parameter：{'colsample_bytree': 0.8, 'subsample': 0.8}
+
+Again get the same values as before. Thus the optimum values are 0.8 for both parameters.
+
+* Step 5.Tune regularization parameters
+Next step is to apply regularization to reduce overfitting. 
+
+```python
+cv_params = {'reg_alpha':[0,0.1,0.6,1,100],'reg_lambda':[0.1,0.3,0.6,1,100]}
+```
+Result:
+best value for the parameter：{'reg_alpha': 0.6, 'reg_lambda': 0.3}
+
+Then fix alpha and try more values for lambda. 
+
+```
+cv_params = {'reg_lambda':[0.2,0.3,0.4,0.5]}
+```
+Result:
+best value for the parameter：{'reg_lambda': 0.3}
+
+Thus the optimum values are 0.6 for reg_alpha and 0.3 for reg_lambda.
+
+* Step 6.Reduce learning rate
+Lastly, lower the learning rate and add more trees. Therefore, I use the cv function to do the job again.
+
+```python
+cv_params = {'learning_rate':[0.01,0.05,0.1,0.15,0.2,0.3]}
+```
+Result:
+best value for the parameter：{'learning_rate': 0.01}
+
+Then the final step is to re-calibrate the number of boosting rounds for the updated parameters by using early-stopping method.
+
+```python
+params = {'learning_rate': 0.01, 'max_depth': 5, 
+          'min_child_weight': 2, 'subsample': 0.8, 'colsample_bytree': 0.8,
+          'gamma': 0, 'reg_alpha': 0.6, 'reg_lambda': 0.3, 'eval_metric':'rmse'}
+watchlist = [(d_train, 'train'), (d_valid, 'valid')]
+rgs = xgb.train(params, d_train, 10000, watchlist, early_stopping_rounds=100,
+verbose_eval=10)
+```
+
+Result:
+Stopping. Best iteration:
+[850]	train-rmse:0.67492	valid-rmse:0.88371
+
+test_rmse = 0.90912
+
+## Result:
+best value for the parameter：{'colsample_bytree': 0.8, 'subsample': 0.8}
+
+
+
+
+
+
+  
 
 
 ## END
