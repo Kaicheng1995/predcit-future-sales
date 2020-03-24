@@ -1,15 +1,15 @@
-# Predict Future Sales
+# Predict Future Sales⏰🇷
 
 
+In this project I work with a time series dataset consisting of daily sales data, kindly provided by one of the largest Russian software firms - [1C Company](http://www.1c.com/)🇷🇺. The goal for this project is to predict total sales for every product and store in the next month. 
 
-In this project I work with a time series dataset consisting of daily sales data, kindly provided by one of the largest Russian software firms - 1C Company. The goal for this project is to predict total sales for every product and store in the next month.
+<img src="https://github.com/Kaicheng1995/predict-future-sales/blob/master/img/kaggle.png" width="1000">
 
 
 ## Look at Data Quickly
 
-通常情况下，拿到这类tabular数据集之后，我会先大致浏览数据中各个字段的含义，并构建一个基础模型来试探这个数据集，根据反馈结果再重新深入理解各个字段的具体含义，深挖它们的特征和关联，也就是EDA（Exploratory Data Analysis）。
 
-![Figure 1: Data Description](https://upload-images.jianshu.io/upload_images/13575947-bb77945fea6cdbe4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+<img src="https://github.com/Kaicheng1995/predict-future-sales/blob/master/img/data.png" width="300">
 
 数据描述告诉我们，sale_train.csv可以通过shop_id、item_id、item_category_id来合并items.csv、item_categories.csv和shops.csv。
 
