@@ -4,9 +4,7 @@
 
 > [Kaggle Link](https://www.kaggle.com/c/competitive-data-science-predict-future-sales/overview):
 
-
-<div align=center>
-<img src="https://github.com/Kaicheng1995/predict-future-sales/blob/master/img/kaggle.png" width="800"></div>
+[![alt text](https://github.com/Kaicheng1995/predict-future-sales/blob/master/img/kaggle.png "title")](https://www.kaggle.com/c/competitive-data-science-predict-future-sales/overview)
 
 
 ```diff
