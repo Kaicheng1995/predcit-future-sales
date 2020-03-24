@@ -1,15 +1,15 @@
 # Predict Future Sales⏰🇷
 
 
-In this project I work with a time series dataset consisting of daily sales data, kindly provided by one of the largest Russian software firms - [1C Company](http://www.1c.com/)🇷🇺. The goal for this project is to predict total sales for every product and store in the next month. 
-
-<img src="https://github.com/Kaicheng1995/predict-future-sales/blob/master/img/kaggle.png" width="1000">
+> In this project I work with a time series dataset consisting of daily sales data, kindly provided by one of the largest Russian software firms - [1C Company](http://www.1c.com/)🇷🇺. The goal for this project is to predict total sales for every product and store in the next month. 
+<center>
+<img src="https://github.com/Kaicheng1995/predict-future-sales/blob/master/img/kaggle.png" width="800"></center>
 
 
 ## Look at Data Quickly
 
 
-<img src="https://github.com/Kaicheng1995/predict-future-sales/blob/master/img/data.png" width="300">
+<img src="https://github.com/Kaicheng1995/predict-future-sales/blob/master/img/data.png" width="700">
 
 数据描述告诉我们，sale_train.csv可以通过shop_id、item_id、item_category_id来合并items.csv、item_categories.csv和shops.csv。
 
