@@ -1,6 +1,9 @@
-![](https://upload-images.jianshu.io/upload_images/13575947-951f96dbb8b2eba4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+# Predict Future Sales
 
-本文是[【Predict Future Sales】用深度学习玩转销量预测](https://www.jianshu.com/p/f0d34d1952f0)的续集，主要介绍另一个强大的机器学习算法--随机森林（Random Forest，下文简称RF）在销量预测实例中的应用。github: [https://github.com/alexshuang/predict_future_sales/blob/master/predict_future_sale_rf.ipynb](https://github.com/alexshuang/predict_future_sales/blob/master/predict_future_sale_rf.ipynb)
+
+
+In this project I work with a time series dataset consisting of daily sales data, kindly provided by one of the largest Russian software firms - 1C Company. The goal for this project is to predict total sales for every product and store in the next month.
+
 
 ## Look at Data Quickly
 
