@@ -5,7 +5,7 @@
 
 * [Kaggle Link](https://www.kaggle.com/c/competitive-data-science-predict-future-sales/overview)
 
-> I use Python to detect and split text variables, and implement **label encoding**, **mean encoding** on the categorical variables extracted from original text information. Finally, I Incremented features from only 4 to 39 and using **XGboost**, **LightGBM**, and model ensemble for the prediction. The ranking on Kaggle is at top **25%** with **rmse = 0.90912**.
+> I use Python to detect and split text variables, and implement **label encoding**, **mean encoding** on the categorical variables extracted from original text information. Finally, I Incremented features from only 4 to 39 and using **XGboost**, **LightGBM**, and model ensemble for the prediction. The ranking on Kaggle is at top 25% with rmse = 0.90912.
 
 ```diff
 + See more details and data visualization at [prediction.ipynb]
