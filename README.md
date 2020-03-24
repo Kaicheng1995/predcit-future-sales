@@ -2,7 +2,7 @@
 
 > In this project I work with a time series dataset consisting of daily sales data, kindly provided by one of the largest Russian software firms - [1C Company](http://www.1c.com/)🇷🇺. The goal for this project is to predict total sales for every product and store in the next month.
 
-> [Kaggle Link](https://www.kaggle.com/c/competitive-data-science-predict-future-sales/overview)🕹
+> [Kaggle Link](https://www.kaggle.com/c/competitive-data-science-predict-future-sales/overview):
 
 
 <div align=center>
