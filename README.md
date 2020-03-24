@@ -1,9 +1,9 @@
-# Predict Future Sales⏰🇷
+# Predict Future Sales ⏰
 
 
 > In this project I work with a time series dataset consisting of daily sales data, kindly provided by one of the largest Russian software firms - [1C Company](http://www.1c.com/)🇷🇺. The goal for this project is to predict total sales for every product and store in the next month. 
-<center>
-<img src="https://github.com/Kaicheng1995/predict-future-sales/blob/master/img/kaggle.png" width="800"></center>
+<div align=center>
+<img src="https://github.com/Kaicheng1995/predict-future-sales/blob/master/img/kaggle.png" width="800"></DIV>
 
 
 ## Look at Data Quickly
