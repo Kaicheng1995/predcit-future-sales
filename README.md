@@ -1,11 +1,11 @@
 # Predict Future Sales ⏰
 [![alt text](https://github.com/Kaicheng1995/predict-future-sales/blob/master/img/kaggle.png "title")](https://www.kaggle.com/c/competitive-data-science-predict-future-sales/overview)
 
-> In this project I work with a **time series** dataset consisting of daily sales data, kindly provided by one of the largest Russian software firms - [1C Company](http://www.1c.com/)🇷🇺. The goal for this project is to predict total sales for every product and store in the next month.
+> In this project I work with a **time series** dataset consisting of daily sales data, kindly provided by one of the largest Russian software firms - [1C Company](http://www.1c.com/)🇷🇺. The goal for this project is to predict total sales for every product and store in the next month. 
 
 * [Kaggle Link](https://www.kaggle.com/c/competitive-data-science-predict-future-sales/overview)
 
-> I use Python to detect and split text variables, and implement **label encoding**, **mean encoding** on the categorical variables extracted from original text information. Finally, I Incremented features from only 4 to 39 and using **XGboost**, **LightGBM**, and model ensemble for the prediction.
+> I use Python to detect and split text variables, and implement **label encoding**, **mean encoding** on the categorical variables extracted from original text information. Finally, I Incremented features from only 4 to 39 and using **XGboost**, **LightGBM**, and model ensemble for the prediction. The ranking on Kaggle is at top **25%** with **rmse = 0.90912**.
 
 ```diff
 + See more details and data visualization at [prediction.ipynb]
