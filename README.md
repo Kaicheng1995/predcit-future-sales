@@ -1,21 +1,27 @@
 # Predict Future Sales ⏰
 
+> In this project I work with a time series dataset consisting of daily sales data, kindly provided by one of the largest Russian software firms - [1C Company](http://www.1c.com/)🇷🇺. The goal for this project is to predict total sales for every product and store in the next month.
 
-> In this project I work with a time series dataset consisting of daily sales data, kindly provided by one of the largest Russian software firms - [1C Company](http://www.1c.com/)🇷🇺. The goal for this project is to predict total sales for every product and store in the next month. 
+> [Kaggle Link](https://www.kaggle.com/c/competitive-data-science-predict-future-sales/overview)🕹
+
+
 <div align=center>
-<img src="https://github.com/Kaicheng1995/predict-future-sales/blob/master/img/kaggle.png" width="800"></DIV>
+<img src="https://github.com/Kaicheng1995/predict-future-sales/blob/master/img/kaggle.png" width="800"></div>
 
+
+```diff
+! ATTENTION: check prediction.ipynb if you feel confused reading this doucument.
+```
 
 ## Look at Data Quickly
 
 
-<img src="https://github.com/Kaicheng1995/predict-future-sales/blob/master/img/data.png" width="700">
+<img src="https://github.com/Kaicheng1995/predict-future-sales/blob/master/img/data.png" width="800">
 
-数据描述告诉我们，sale_train.csv可以通过shop_id、item_id、item_category_id来合并items.csv、item_categories.csv和shops.csv。
+The data told us that **`sales_train.csv`** can be merged with **`items.csv.csv`**, **`item_categories.csv`**, **`shops.csv`** by shop_id、item_id、item_category_id. 
 
-预测目标：item_cnt_month--商品月销量，也称为因变量（depend variable），需要根据item_cnt_day按月统计所有商店里每件商品的销量。为了简化模型，官方将item_cnt_month的取值范围限制在[0, 20]。
+Prediction Goal: **`item_cnt_month`** True target values are clipped into [0,20] range.
 
-完成了item_cnt_month的统计后，字段date和item_cnt_day都不再需要了，但考虑到相同月份的商品价格也有可能会有变化，因此需要计算出商品的月均价--item_price_month，来替代item_price。
 
 ```
 train = train.merge(shops, on='shop_id')
